@@ -32,6 +32,25 @@ const newsController = {
             res.status(500).json({ message: "Impossible de créer l'article" });
         }
     },
+    async deleteNewsById(req, res) {
+        const { id } = req.params;
+        try {
+            const response = await axios.delete(`${DUMMY_JSON_URL}/${id}`);
+            res.status(200).json({ message: "Article supprimé avec succès", data: response.data });
+        } catch (error) {
+            res.status(500).json({ message: "Impossible de supprimer l'article" });
+        }
+    },
+    async updateNewsById(req, res) {
+        const { id } = req.params;
+        const updatedArticle = req.body;
+        try {
+            const response = await axios.put(`${DUMMY_JSON_URL}/${id}`, updatedArticle);
+            res.status(200).json(response.data);
+        } catch (error) {
+            res.status(500).json({ message: "Impossible de mettre à jour l'article" });
+        }
+    },
 };
 
 module.exports = newsController;
